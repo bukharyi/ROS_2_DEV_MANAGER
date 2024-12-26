@@ -2,7 +2,7 @@
 # Author: Mahir Sehmi
 # Date: 2024-06-11
 
-DEV_MANAGER_REVISION=20240917
+DEV_MANAGER_REVISION=20241226
 
 ###### GLOBAL ENVIRONMENT ######
 export WS_DIR="$(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")")"

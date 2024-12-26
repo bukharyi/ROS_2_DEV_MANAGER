@@ -6,7 +6,7 @@ export WS_PROJECT_REPO_DIR_NAME="$(basename $(dirname "$(dirname "$(readlink -f 
 
 
 # ======= ROS SETTINGS ======
-export ROS_DISTRO=humble
+export ROS_DISTRO=jazzy
 export ROS_DOMAIN_ID=8
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export ROS_LOCALHOST_ONLY=0 #0 default behavior, attach dds to prefered interface
