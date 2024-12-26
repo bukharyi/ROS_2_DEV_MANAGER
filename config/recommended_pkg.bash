@@ -4,4 +4,6 @@ LIST_APT_PKG=(
     "btop"
     "terminator"
     "tmux"
+    "git"
+    "gh"
 )

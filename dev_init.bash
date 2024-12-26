@@ -2,7 +2,7 @@
 # Author: Mahir Sehmi
 # Date: 2024-06-11
 
-DEV_MANAGER_REVISION=20241226
+DEV_MANAGER_REVISION=20241226	# Functional revision. Change if any new feature is added or any existing feature is modified.
 
 ###### GLOBAL ENVIRONMENT ######
 export WS_DIR="$(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")")"
@@ -12,7 +12,7 @@ export WS_DEV_MANAGER_DIR="$WS_DIR/$WS_DEV_MANAGER_DIR_NAME"
 
 
 ###### PROJECT ENVIRONMENT ######
-export WS_PROJECT_REPO="$WS_DIR${1:-/$WS_DEV_MANAGER_DIR_NAME/template}"
+export WS_PROJECT_REPO="$WS_DIR${1:-/$WS_DEV_MANAGER_DIR_NAME/template/project_repo}"
 export WS_PROJECT_WORKSPACE="${2:-/ws_robot}"
 
 

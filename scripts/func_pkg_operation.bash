@@ -6,11 +6,22 @@ function install_apt_packages() {
     then
         echo -e "$BASH_INFO No apt packages to install. Skipping..."
     else
-        echo -e "$BASH_INFO Installing apt packages..."
+        echo -e "$BASH_INFO The following apt packages will be installed:"
         for pkg in "${LIST_APT_PKG[@]}"; do
-            sudo apt install $pkg -y
+            echo -e "\e[33m$pkg\e[0m"
         done
-        r2sros
+        echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+        read -r response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            echo -e "$BASH_INFO Installing apt packages..."
+            for pkg in "${LIST_APT_PKG[@]}"; do
+                sudo apt install $pkg -y
+            done
+            r2sros
+        else
+            echo -e "$BASH_INFO Installation of apt packages skipped."
+        fi
     fi
 }
 
@@ -23,11 +34,22 @@ function install_python_packages() {
     then
         echo -e "$BASH_INFO No Python packages to install. Skipping..."
     else
-        echo -e "$BASH_INFO Installing Python packages..."
+        echo -e "$BASH_INFO The following Python packages will be installed:"
         for pkg in "${LIST_PYTHON_PKG[@]}"; do
-            pip3 install $pkg
+            echo -e "\e[33m$pkg\e[0m"
         done
-        r2ps
+        echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+        read -r response
+        if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+        then
+            echo -e "$BASH_INFO Installing Python packages..."
+            for pkg in "${LIST_PYTHON_PKG[@]}"; do
+                pip3 install $pkg
+            done
+            r2ps
+        else
+            echo -e "$BASH_INFO Installation of Python packages skipped."
+        fi
     fi
 }
 
