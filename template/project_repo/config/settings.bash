@@ -9,10 +9,6 @@ export WS_PROJECT_REPO_DIR_NAME="$(basename $(dirname "$(dirname "$(readlink -f 
 export ROS_DISTRO=jazzy
 export ROS_DOMAIN_ID=8
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-export ROS_LOCALHOST_ONLY=0 #0 default behavior, attach dds to prefered interface
-						    #1 to enable to loopback only. But need to add mcast address
-						    # route add -net 224.0.0.0 netmask 240.0.0.0 dev lo
-						    # ifconfig lo multicast
 
 
 # ======= LOGGING =======

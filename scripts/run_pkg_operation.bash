@@ -54,7 +54,7 @@ fi
 #######################
 if [ $PKG_OPERATION_OPTION -eq 1 ] || [ $PKG_OPERATION_OPTION -eq 3 ]
 then
-    install_apt_packages
+    install_apt_packages -y
 fi
 
 
@@ -63,15 +63,7 @@ fi
 #######################
 if [ $PKG_OPERATION_OPTION -eq 1 ] || [ $PKG_OPERATION_OPTION -eq 3 ]
 then
-    if [ ${#LIST_PYTHON_PKG[@]} -eq 0 ]
-    then
-        echo -e "$BASH_INFO No Python packages to install. Skipping..."
-    else
-        echo -e "$BASH_INFO Installing Python packages..."
-        for pkg in "${LIST_PYTHON_PKG[@]}"; do
-            pip3 install $pkg
-        done
-    fi
+    install_python_packages -y
 fi
 
 

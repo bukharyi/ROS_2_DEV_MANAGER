@@ -39,7 +39,7 @@ Tested working with:
 3. Done! Now continue to one of the options in (3.).
 
 ### 3. Adding Project Repository
-- **(OPTION A)** Creating Project Repository using Template:
+- **(OPTION A)** Creating New Project Repository using Template:
     1. In `dev_manager/template`, copy the `project_repo` folder into your created `PROJECTS_FOLDER`. Refer folder structure below.
     2. `cd` into `dev_manager` dir and run:
         ```
@@ -56,6 +56,39 @@ Tested working with:
     - It will prompt whether to add aliases/shortcut to `.bashrc` automatically. Accept it.
     - After accepting, it will automatically add aliases to `.bashrc` and show examples of aliases on the terminal. Remember it so that you can access your project easily by typing the alias in terminal.
 2. Done! Your project workspace is ready! Try access your project using alias in new terminal!
+
+### 4. Configuring Your Project Repository
+- __Modify your project settings__:
+    1. Open `<project_repo>/config/settings.bash`.
+    2. If you are accessing this from a template, you can adjust the value but do not change the existing variable name as they are critical for the workflow of this development manager tool. (example of existing variable: `DEV_PROJECT_NAME`, `OS_DISTRO`, `WS_PROJECT_REPO_DIR_NAME`, `ROS_DISTRO`, ...)
+    3. You may change the value of existing variable or add new one that fits your need.
+- __Add/Modify the automatic alias adder for accessing project workspace using alias__: 
+    1. Open `<project_repo>/config/bashrc_list.bash`.
+    2. Add/modify workspace:
+        - **Modify workspace alias**: Change `wst` in `"alias wst='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"` to something else. (e.g:`wsrobot` in `"alias wsrobot='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"`).
+        - **Add workspace alias**: If you wish to have more than 1 workspace, then create a folder in the same project repo and name it anything you want. Then add a new line in following this format:
+        ```
+        alias <alias>='source <dev_init_path> <repo dir> <ws dir>'
+        ```
+        the `<ws dir>` must be the same name as your newly created folder. Remember the `/` is important.
+    
+    3. An example of the modified `bashrc_list.bash` should look like this:
+        ```
+        bashrc_list=(
+            "# $DEV_PROJECT_NAME Development Path"
+            "alias wsrb='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"
+            "alias wssim='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_sim'"
+            "alias wstest='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_testing'"
+        )
+        ```
+    4. Type `r2dev` and choose `5` to add these aliases to `~/.bashrc`. Example of output to `~/.bashrc` will look something like this:
+        ```
+        # TEMPLATE Development Path
+        alias wsrb='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_robot'
+        alias wssim='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_sim'
+        alias wstest='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_testing'
+        ```
+- Will write more tutorial for this section 4 if needed...
 
 # Useful Aliases
 After initializing the workspace, these are useful aliases you can use. Adding or modifying aliases can be done in project repo under `config` folder.
@@ -108,7 +141,7 @@ PROJECTS_FOLDER
 
 To use the dev manager, add alias using below format into `.bashrc`:
 ```
-<alias>='source <dev_init_path> <repo dir> <ws dir>'
+alias <alias>='source <dev_init_path> <repo dir> <ws dir>'
 ```
 where `<repo dir>` dir is relative to PROJECTS_FOLDER dir and `<ws dir>` dir is relative to working repo dir.
 
@@ -124,8 +157,9 @@ The project repo must follow the same structure as template. Inside the template
 Please use the template given if you are creating a new project.
 
 # Future Plan
-1. Automatic project creation using template. (For now read tutorial 3A)
-2. Automatic install and integration of Gazebo Sim.
+1. Add Docker support.
+2. Automatic project creation using template. (For now read tutorial 3A).
+3. Automatic install and integration of Gazebo Sim.
 
 # SUPPORT! :D
  Love this project? Consider buying me a coffee to fuel more late-night coding sessions! Your support helps keep the innovation going. 🙌

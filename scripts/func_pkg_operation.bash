@@ -2,6 +2,11 @@
 # Install apt packages
 #######################
 function install_apt_packages() {
+    local auto_confirm=false
+    if [[ "$1" == "-y" ]]; then
+        auto_confirm=true
+    fi
+
     if [ ${#LIST_APT_PKG[@]} -eq 0 ]
     then
         echo -e "$BASH_INFO No apt packages to install. Skipping..."
@@ -10,8 +15,14 @@ function install_apt_packages() {
         for pkg in "${LIST_APT_PKG[@]}"; do
             echo -e "\e[33m$pkg\e[0m"
         done
-        echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
-        read -r response
+
+        if [ "$auto_confirm" = false ]; then
+            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            read -r response
+        else
+            response="y"
+        fi
+
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
             echo -e "$BASH_INFO Installing apt packages..."
@@ -30,6 +41,11 @@ function install_apt_packages() {
 # Install Python packages
 #######################
 function install_python_packages() {
+    local auto_confirm=false
+    if [[ "$1" == "-y" ]]; then
+        auto_confirm=true
+    fi
+
     if [ ${#LIST_PYTHON_PKG[@]} -eq 0 ]
     then
         echo -e "$BASH_INFO No Python packages to install. Skipping..."
@@ -38,8 +54,14 @@ function install_python_packages() {
         for pkg in "${LIST_PYTHON_PKG[@]}"; do
             echo -e "\e[33m$pkg\e[0m"
         done
-        echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
-        read -r response
+
+        if [ "$auto_confirm" = false ]; then
+            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            read -r response
+        else
+            response="y"
+        fi
+
         if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
         then
             echo -e "$BASH_INFO Installing Python packages..."

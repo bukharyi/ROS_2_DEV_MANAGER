@@ -10,6 +10,9 @@ export WS_DEV_INIT_PATH="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/dev_ini
 export WS_DEV_MANAGER_DIR_NAME="$(basename $(dirname "$(readlink -f "${BASH_SOURCE[0]}")"))"
 export WS_DEV_MANAGER_DIR="$WS_DIR/$WS_DEV_MANAGER_DIR_NAME"
 
+###### RESET PROJECT ENVIRONMENT ######
+source $WS_DEV_MANAGER_DIR/scripts/reset.bash
+
 
 ###### PROJECT ENVIRONMENT ######
 export WS_PROJECT_REPO="$WS_DIR${1:-/$WS_DEV_MANAGER_DIR_NAME/template/project_repo}"
