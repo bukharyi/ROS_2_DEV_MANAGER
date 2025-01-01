@@ -72,20 +72,7 @@ fi
 #######################
 if [ $PKG_OPERATION_OPTION -eq 1 ] || [ $PKG_OPERATION_OPTION -eq 4 ]
 then
-    if [ ${#LIST_GIT_REPO[@]} -eq 0 ]
-    then
-        echo -e "$BASH_INFO No git packages to clone. Skipping..."
-    else
-        echo -e "$BASH_INFO Cloning git packages..."
-        # Create src directory if not exist
-        mkdir -p $CLONE_DIR
-        cd $CLONE_DIR
-        for repo in "${LIST_GIT_REPO[@]}"; do
-            IFS=' ' read -r -a array <<< "$repo"
-            git_clone ${array[0]} ${array[1]}
-        done
-        cd $CURRENT_TERMINAL_DIR
-    fi
+    clone_git_packages -y
 fi
 
 
@@ -94,16 +81,7 @@ fi
 #######################
 if [ $PKG_OPERATION_OPTION -eq 1 ] || [ $PKG_OPERATION_OPTION -eq 6 ]
 then
-    if [ ${#LIST_EXEC_CMD[@]} -eq 0 ]
-    then
-        echo -e "$BASH_INFO No commands to execute. Skipping..."
-    else
-        echo -e "$BASH_INFO Executing commands..."
-        for cmd in "${LIST_EXEC_CMD[@]}"; do
-            echo -e "$BASH_INFO Executing: \e[36m$cmd\e[0m"
-            $cmd
-        done
-    fi
+    execute_commands -y
 fi
 
 

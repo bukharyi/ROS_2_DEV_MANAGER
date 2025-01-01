@@ -1,94 +1,101 @@
 # Development Manager for ROS 2
-A terminal-based development manager for ROS 2. Designed to streamline workflows, reduce errors, and accelerate development. Compatible with any ROS 2 distro. Just change the `ROS_DISTRO` parameter in `project_repo/config/settings.bash`.
+A terminal-based development manager for ROS 2. Designed to streamline workflows, reduce errors, and accelerate development. Compatible with any ROS 2 distro. Just change the `ROS_DISTRO` parameter in `<project_repo>/config/settings.bash`.
 
-Tested working with:
-- Ubuntu 20.04
-- Ubuntu 22.04
-- Ubuntu 24.04
-- ROS 2 Foxy
-- ROS 2 Humble
-- ROS 2 Iron
-- ROS 2 Jazzy
+Tested with:
+- ROS 2 Humble in Ubuntu 22.04
+- ROS 2 Jazzy in Ubuntu 24.04
 
-# Setup Tutorial
-### 1. Setting up project folder
-1. Install `git` and `gh`:
-   ```
-   sudo apt install git gh -y
-   ``` 
-2. Login to github account (Recommended for clonning private repo easily):
-    ```
-    gh auth login
-    ```
-3. Create an empty folder. (This is the `PROJECTS_FOLDER` as shown in the "Folder Structure" section below. This will be the folder where you will place the dev_manager and project repos.)
-4. `cd` into the created folder.
-5. Clone this repo as `dev_manager`:
+Known issue:
+- In Ubuntu 24.04, you may face "EXTERNALLY-MANAGED" error when using python pip package installer and rosdep. Two solutions:
+    1. Use python environment as suggested. OR
+    2. Remove `/usr/lib/python3.XX/EXTERNALLY-MANAGED` file (temporary fix).
+
+
+# First Time Basic Setup Tutorial
+## 1) Prepare Project Folder
+1. Create an empty folder anywhere in your system. (This is the `PROJECTS_FOLDER` as shown in the [Folder Structure] section below. This will be the folder where you will place the dev_manager and project repos.)
+2. `cd` into the created folder.
+3. Clone this repo as `dev_manager`:
     ```
     git clone https://github.com/mnmahir/ROS_2_DEV_MANAGER.git dev_manager
     ```
-6. Done! Continue to (2.) or options in (3.)
-### 2. Install ROS 2 using dev manager (Optional if you haven't install ROS 2)
+## 2) Create New ROS 2 Project using Template
 1. `cd` into `dev_manager` dir and run:
     ```
     source dev_init.bash
     ```
-    This will initialize a temporary session. The default ROS distro is shown in terminal. You can change the ROS 2 distro by changing the `ROS_DISTRO` parameter in `../dev_manager/template/project_repo/config/settings.bash`.
-2. Type `r2dev` in terminal to open development manager menu.
-   1. Choose `1` to install ROS 2.
-   2. You may view and install recommended software by choosing `2`.
-3. Done! Now continue to one of the options in (3.).
+    Note:
+    - This will initialize a temporary session.
+    - The default ROS distro is shown in terminal. You can change the ROS 2 distro supported by your current Ubuntu system by changing the `ROS_DISTRO` parameter in `../dev_manager/temp/settings.bash`.
+2. Open development manager menu by running this command:
+    ```
+    r2dev
+    ```
+    Note:
+    - You should see development the menu looking like this:
+        ```
+        =================================================
+              DEVELOPMENT MANAGER
+        =================================================
+        [ACTION] Select an option:
+        =   =   =   =   =   =   =   =   =   =   =   =   =
+        [1] Install ROS2
+        [2] Install Recommended Software
+        [3] Clone a project from GitHub
+        [4] Create a new project using template
+        [5] Add alias to .bashrc
+        =   =   =   =   =   =   =   =   =   =   =   =   =
+        [Q] TO EXIT
+        ```
+3. Choose option `[3]`.
+    - Expected output:
+        ```
+        [ACTION] Select compatible project repository to clone:
+        =   =   =   =   =   =   =   =   =   =   =   =   =
+        [0] Use custom URL
+        [1] https://github.com/mnmahir/ROS_2_DEV_MANAGER.git project_template my_new_project
+        PRESS [CTRL] + [C] TO EXIT
+        ```
+4. Choose option `[1]`.
+    - Note:
+        - This will create a `my_new_project` folder and clone the content from `project_template` branch.
+5. It will ask whether you want to add an alias to `~/.bashrc` which is a shortcut to access your project and initialize this manager from terminal. For this tutorial, just type `y`.
+    - Note:
+        - This will add an alias to your `~/.bashrc` file. Depending where your `PROJECTS_FOLDER` is located, there will be lines in your `~/.bashrc` looking something like this:
+            ```
+            # TEMPLATE Development Path
+            alias wst='source /media/L/ros/dev_manager/dev_init.bash /my_new_project /ws_robot'
+            ```
+        - In example above, my `PROJECTS_FOLDER` is `/media/L/ros`.
+        - The alias added here is `wst`.
+        - By default, your workspace will be in `ws_robot` folder inside `my_new_project` folder.
+6. Done! Now you can just type `wst` to access your project workspace. Read the [[Useful Aliases]] section below for shortcuts.
+## 3) Modify the Project Settings
+1. Go to your`../my_new_project/config` folder, and open `settings.bash`.
+2. You can change the default value to your need such as `DEV_PROJECT_NAME`, `ROS_DISTRO`, `ROS_DOMAIN_ID`, etc. or you can add your own.
+    - Note:
+        - Do not rename or remove the default variable name in `ENVIRONMENT` and `ROS SETTINGS` as it is required by this manager. But, you may change the value.
+3. After modifying, type `wst` to re initialize.
 
-### 3. Adding Project Repository
-- **(OPTION A)** Creating New Project Repository using Template:
-    1. In `dev_manager/template`, copy the `project_repo` folder into your created `PROJECTS_FOLDER`. Refer folder structure below.
-    2. `cd` into `dev_manager` dir and run:
-        ```
-        source dev_init.bash /project_repo /ws_robot
-        ```
-    3. Type `r2dev` in terminal to open development manager menu. Then, choose `5` to automatically add alias/shortcut to .bashrc.
-        - An example of alias you can use will be shown on the terminal. Remember it so that you can access your project easily by typing the alias in terminal.
-        - For this template, the alias it is defaulted to `wst`. You can change this in `../project_repo/config/bashrc_list.bash` and `~/.bashrc`.
-    4. Done! Your project workspace is ready! Try access and initialize your project by typing `wst` in new terminal!
+# Advanced Setup Tutorial
+- Will write full detail soon!
+    - For now, explore the `my_new_project` folder:
+        - You can change the alias or add more alias in `~/.bahsrc`if you have more than 1 workspace in a single project. Remember to match your directory name and follow the format as shown in [Folder Structure] section below. If your project folder name is not `my_new_project` then change it as well.
+        - Inside `pkg` directory of the project, you can change, remove or add the folder name that starts with `_`. This manager will smartly identify the folders inside `pkg` that follow this folder naming format. An example `pkg_list.bash` in the folder can be modified.
+        - `pkg_list.bash` is where you can add your frequently used packages and dependencies. See the examples inside the file.
+        - I will try write more details about what each files in `pkg` and `config` means in `project_template` branch.
 
-- **(OPTION B)** Clone Project Repository from GitHub:
-    - For this option, the GitHub project repo must follow the same folder structure and files as in template.
-1. Type `r2dev` in terminal to open development manager menu. Then, choose `3` to clone project repo from GitHub.
-    - It will prompt whether to add aliases/shortcut to `.bashrc` automatically. Accept it.
-    - After accepting, it will automatically add aliases to `.bashrc` and show examples of aliases on the terminal. Remember it so that you can access your project easily by typing the alias in terminal.
-2. Done! Your project workspace is ready! Try access your project using alias in new terminal!
-
-### 4. Configuring Your Project Repository
-- __Modify your project settings__:
-    1. Open `<project_repo>/config/settings.bash`.
-    2. If you are accessing this from a template, you can adjust the value but do not change the existing variable name as they are critical for the workflow of this development manager tool. (example of existing variable: `DEV_PROJECT_NAME`, `OS_DISTRO`, `WS_PROJECT_REPO_DIR_NAME`, `ROS_DISTRO`, ...)
-    3. You may change the value of existing variable or add new one that fits your need.
-- __Add/Modify the automatic alias adder for accessing project workspace using alias__: 
-    1. Open `<project_repo>/config/bashrc_list.bash`.
-    2. Add/modify workspace:
-        - **Modify workspace alias**: Change `wst` in `"alias wst='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"` to something else. (e.g:`wsrobot` in `"alias wsrobot='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"`).
-        - **Add workspace alias**: If you wish to have more than 1 workspace, then create a folder in the same project repo and name it anything you want. Then add a new line in following this format:
-        ```
-        alias <alias>='source <dev_init_path> <repo dir> <ws dir>'
-        ```
-        the `<ws dir>` must be the same name as your newly created folder. Remember the `/` is important.
-    
-    3. An example of the modified `bashrc_list.bash` should look like this:
-        ```
-        bashrc_list=(
-            "# $DEV_PROJECT_NAME Development Path"
-            "alias wsrb='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_robot'"
-            "alias wssim='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_sim'"
-            "alias wstest='source $WS_DEV_INIT_PATH /$WS_PROJECT_REPO_DIR_NAME /ws_testing'"
-        )
-        ```
-    4. Type `r2dev` and choose `5` to add these aliases to `~/.bashrc`. Example of output to `~/.bashrc` will look something like this:
-        ```
-        # TEMPLATE Development Path
-        alias wsrb='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_robot'
-        alias wssim='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_sim'
-        alias wstest='source /media/L/ros/dev_manager/dev_init.bash /project_repo /ws_testing'
-        ```
-- Will write more tutorial for this section 4 if needed...
+# Recommendation
+## 1) Install GitHub CLI
+If you want to use this manager with your private GitHub repo, I recommend using GitHub CLI so that this manager can clone your private without issue.
+1. Install `git` and `gh`:
+    ```
+    sudo apt install git gh -y
+    ``` 
+2. Login to github account:
+    ```
+    gh auth login
+    ```
 
 # Useful Aliases
 After initializing the workspace, these are useful aliases you can use. Adding or modifying aliases can be done in project repo under `config` folder.
@@ -151,6 +158,7 @@ alias wsrobot1='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_1 /ws
 alias wsrobot2='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_2 /ws_robot'
 alias wsrobot3='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_3 /ws_robot'
 ```
+Remember to place the `/` character correctly.
 ## Project Repo Guideline
 The project repo must follow the same structure as template. Inside the template contains pre-defined variables for development manager to consume.
 
@@ -158,8 +166,11 @@ Please use the template given if you are creating a new project.
 
 # Future Plan
 1. Add Docker support.
-2. Automatic project creation using template. (For now read tutorial 3A).
-3. Automatic install and integration of Gazebo Sim.
+2. Add Python environment support.
+3. Substitute git repo in pkg with git submodule.
+4. `r2b` selected package.
+5. Automatic project creation using template. (For now read setup tutorial 3A).
+6. Automatic install and integration of Gazebo Sim.
 
 # SUPPORT! :D
  Love this project? Consider buying me a coffee to fuel more late-night coding sessions! Your support helps keep the innovation going. 🙌

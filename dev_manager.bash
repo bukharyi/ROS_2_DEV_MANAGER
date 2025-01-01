@@ -39,10 +39,8 @@ function main_menu_to_run {
         4)
             # Create a new workspace using template
             echo -e "$BASH_INFO Under construction... Coming soon!"
-            echo -e "$BASH_INFO For the time being, you make a copy of the template workspace manually and rename it."
-            echo -e "$BASH_INFO Then add alias to .bashrc using this format: "
-            echo -e "$BASH_INFO \e[33malias <alias>='source $WS_DEV_INIT_PATH <repo dir> <ws dir>'\e[0m"
-            echo -e "$BASH_INFO <repo dir> is relative to WORKSPACE dir. <ws dir> is relative to repo dir. "
+            echo -e "$BASH_INFO For the time being, use option [3] and choose [1]."
+            echo -e "$BASH_INFO Read README.md for more information."
             ;;
         5)
             # Add alias to .bashrc

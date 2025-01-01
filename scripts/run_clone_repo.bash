@@ -75,7 +75,9 @@ function clone_repo_menu_to_run {
             read -p "" REPO_URL
             echo -e "$BASH_ACTION Enter the branch/commit ID/tag of the repository (If empty will clone default branch):"
             read -p "" REPO_BRANCH
-            git_clone $REPO_URL $REPO_BRANCH
+            echo -e "$BASH_ACTION Enter the directory name of the repository (If empty will use the name from URL):"
+            read -p "" REPO_DIR_NAME
+            git_clone $REPO_URL $REPO_BRANCH $REPO_DIR_NAME
             add_alias_to_bashrc $CLONE_DIR $REPO_DIR_NAME
             ;;
         *)
@@ -83,7 +85,8 @@ function clone_repo_menu_to_run {
             INDEX=$((choice-1))
             REPO_URL=$(echo ${LIST_FAV_REPO[$INDEX]} | cut -d' ' -f1)
             REPO_BRANCH=$(echo ${LIST_FAV_REPO[$INDEX]} | cut -d' ' -f2)
-            git_clone $REPO_URL $REPO_BRANCH
+            REPO_DIR_NAME=$(echo ${LIST_FAV_REPO[$INDEX]} | cut -d' ' -f3)
+            git_clone $REPO_URL $REPO_BRANCH $REPO_DIR_NAME
             add_alias_to_bashrc $CLONE_DIR $REPO_DIR_NAME
             ;;
     esac

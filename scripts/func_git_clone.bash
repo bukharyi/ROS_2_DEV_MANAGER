@@ -6,6 +6,7 @@ function git_clone {
 
     URL=$1
     COMMIT_ID=$2
+    REPO_DIR_NAME=$3
     DIR_REGEX='\/([a-zA-Z0-9._-]+)\.git'
     cd $CLONE_DIR
 
@@ -19,7 +20,11 @@ function git_clone {
     echo -e "$BASH_INFO Cloning \e[36m$URL\e[0m at \e[36m$CLONE_DIR\e[0m."
     if [[ $URL =~ $DIR_REGEX ]]
     then
-        REPO_DIR_NAME="${BASH_REMATCH[1]}"
+        # check if REPO_DIR_NAME is empty. If empty, use the directory name from URL
+        if [[ $REPO_DIR_NAME == "" ]]
+        then
+            REPO_DIR_NAME="${BASH_REMATCH[1]}"
+        fi
         echo -e "$BASH_INFO into '$REPO_DIR_NAME' directory."
         git clone $URL $REPO_DIR_NAME
         
@@ -41,13 +46,13 @@ function git_clone {
                 echo -e "$BASH_ERROR Could not find commit SHA '$COMMIT_ID' in '$URL'"
                 echo -e "$BASH_WARNING Current HEAD is '$(git rev-parse HEAD)'"
             fi
-            echo -e "$BASH_INFO Initialize any submodule."
+            echo -e "$BASH_INFO Initializing any submodule."
             git submodule init
             git submodule update
         else
             echo -e "$BASH_WARNING No commit ID or tag given. Will use latest commit from main branch instead."
             cd $CLONE_DIR/$REPO_DIR_NAME
-            echo -e "$BASH_INFO Initialize any submodule."
+            echo -e "$BASH_INFO Initializing any submodule."
             git submodule init
             git submodule update
         fi
