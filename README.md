@@ -1,5 +1,5 @@
 # Development Manager for ROS 2
-A terminal-based development manager for ROS 2. Designed to streamline workflows, reduce errors, and accelerate development. Compatible with any ROS 2 distro. Just change the `ROS_DISTRO` parameter in `<project_repo>/config/settings.bash`.
+A terminal-based development manager for ROS 2. Designed to streamline workflows, reduce errors, and accelerate development. Compatible with any ROS 2 distro.
 
 Tested with:
 - ROS 2 Humble in Ubuntu 22.04
@@ -8,7 +8,7 @@ Tested with:
 Known issue:
 - In Ubuntu 24.04, you may face "EXTERNALLY-MANAGED" error when using python pip package installer and rosdep. Two solutions:
     1. Use python environment as suggested. OR
-    2. Remove `/usr/lib/python3.XX/EXTERNALLY-MANAGED` file (temporary fix).
+    2. Remove `/usr/lib/python3.XX/EXTERNALLY-MANAGED` file.
 
 
 # First Time Basic Setup Tutorial
@@ -26,7 +26,7 @@ Known issue:
     ```
     Note:
     - This will initialize a temporary session.
-    - The default ROS distro is shown in terminal. You can change the ROS 2 distro supported by your current Ubuntu system by changing the `ROS_DISTRO` parameter in `../dev_manager/temp/settings.bash`.
+    - The default ROS distro is shown in terminal. You can change the ROS 2 distro supported by your current Ubuntu system by changing the `ROS_DISTRO` parameter in `../dev_manager/temp/config/settings.bash`.
 2. Open development manager menu by running this command:
     ```
     r2dev
@@ -150,15 +150,21 @@ To use the dev manager, add alias using below format into `.bashrc`:
 ```
 alias <alias>='source <dev_init_path> <repo dir> <ws dir>'
 ```
-where `<repo dir>` dir is relative to PROJECTS_FOLDER dir and `<ws dir>` dir is relative to working repo dir.
+where `<repo dir>` dir is relative to PROJECTS_FOLDER dir and `<ws dir>` dir is relative to working repo dir. Make sure the spaces and placement of `/` character is correct.
 
 eg:
 ```
-alias wsrobot1='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_1 /ws_robot'
-alias wsrobot2='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_2 /ws_robot'
-alias wsrobot3='source ~/WORKSPACE/dev_manager/dev_init.bash /project_repo_3 /ws_robot'
+alias wsr1='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo_1 /ws_robot'
+alias wsr1ms='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo_1 /ws_mystuff'
+alias wsproject2='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo /ws_robot'
 ```
-Remember to place the `/` character correctly.
+You can test the alias and check the `Project Path`, `Project Package Path` and `Active Workspace` is correct. It should look like this for `wsr1` alias:
+```
+[INFO] Project Path: /PROJECTS_FOLDER/project_repo_1
+[INFO] Project Package Path: /PROJECTS_FOLDER/project_repo_1/pkg
+[INFO] Active Workspace: /ws_robot
+```
+
 ## Project Repo Guideline
 The project repo must follow the same structure as template. Inside the template contains pre-defined variables for development manager to consume.
 
@@ -169,8 +175,8 @@ Please use the template given if you are creating a new project.
 2. Add Python environment support.
 3. Substitute git repo in pkg with git submodule.
 4. `r2b` selected package.
-5. Automatic project creation using template. (For now read setup tutorial 3A).
-6. Automatic install and integration of Gazebo Sim.
+5. Better automatic project creation using template. (For now, read tutorial above)
+6. Automatic install and integration of the new Gazebo Sim.
 
 # SUPPORT! :D
  Love this project? Consider buying me a coffee to fuel more late-night coding sessions! Your support helps keep the innovation going. 🙌
