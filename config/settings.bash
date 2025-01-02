@@ -1,6 +1,6 @@
 #!/bin/bash
 # ======= ENVIRONMENT =======
-export DEV_PROJECT_NAME="TEMPLATE"      # Short name is preferred. Only alphanumeric characters and underscores are allowed.
+export DEV_PROJECT_NAME="MY_FIRST_PROJECT"      # Short name is preferred. Only alphanumeric characters and underscores are allowed.
 export OS_DISTRO=$(. /etc/os-release && echo $UBUNTU_CODENAME)
 export WS_PROJECT_REPO_DIR_NAME="$(basename $(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"))"
 
@@ -10,6 +10,8 @@ export ROS_DISTRO=jazzy
 export ROS_DOMAIN_ID=8
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 
+# Above this line, you are allowed to change the value of the variables.
+# But, not recommended to change the name of the variable as it is being used by the manager tool.
 
 # ======= LOGGING =======
 export RCUTILS_COLORIZED_OUTPUT=1
