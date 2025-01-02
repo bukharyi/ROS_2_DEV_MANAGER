@@ -1,25 +1,35 @@
 # Development Manager for ROS 2
-A terminal-based development manager for ROS 2. Designed to streamline workflows, reduce errors, and accelerate development. Compatible with any ROS 2 distro.
+A terminal-based ROS 2 project workspace management and development framework. Designed to streamline workflows, reduce errors and mistakes, and accelerate development with smart and automated features. Compatible with any ROS 2 distro.
 
-Tested with:
+### Why using this?
+- You want to start working on ROS 2 project faster and don't want to waste time setting up a workspace and configure it.
+- You just got a new PC and want to straight a way working on your ROS 2 project with minimal setup process.
+- You want to have a multiple workspace or project with each using different package version and environment configuration but lazy to go thorough the manual sourcing, export and building process.
+- You hate `apt install ros-xx-xx` and want to control the version of your favourite package that you clone from GitHub and minimalize dependency issue.
+- You keep forgetting to source your installed package and want an automated sourcing feature each time after building the package.
+- You hate having to `cd` around to build your package and want to `colcon build` your package at pre-defined location regardless of where your current terminal working directory is.
+- You want a clean and organized workspace so that you can navigate your code easily.
+
+Anyway... just give this tool a try. Most common multi-step processes has been consodilated into one push button (See useful aliases below)😃
+
+
+### Tested with
 - ROS 2 Humble in Ubuntu 22.04
 - ROS 2 Jazzy in Ubuntu 24.04
 
-Known issue:
+### Known issue
 - In Ubuntu 24.04, you may face "EXTERNALLY-MANAGED" error when using python pip package installer and rosdep. Two solutions:
     1. Use python environment as suggested. OR
     2. Remove `/usr/lib/python3.XX/EXTERNALLY-MANAGED` file.
-
-
-# First Time Basic Setup Tutorial
+# First Time Setup Tutorial
 ## 1) Prepare Project Folder
-1. Create an empty folder anywhere in your system. (This is the `PROJECTS_FOLDER` as shown in the [Folder Structure] section below. This will be the folder where you will place the dev_manager and project repos.)
+1. Create an empty folder anywhere in your system. (This is the `PROJECTS_FOLDER` as shown in the [Folder & File Structure] section below. This will be the folder where you will place the dev_manager and project repos.)
 2. `cd` into the created folder.
 3. Clone this repo as `dev_manager`:
     ```
     git clone https://github.com/mnmahir/ROS_2_DEV_MANAGER.git dev_manager
     ```
-## 2) Create New ROS 2 Project using Template
+## 2) Create New ROS 2 Project
 1. `cd` into `dev_manager` dir and run:
     ```
     source dev_init.bash
@@ -70,6 +80,9 @@ Known issue:
         - The alias added here is `wst`.
         - By default, your workspace will be in `ws_robot` folder inside `my_new_project` folder.
 6. Done! Now you can just type `wst` to access your project workspace. Read the [[Useful Aliases]] section below for shortcuts.
+    - Note:
+        - Since this method clone a git repo from GitHub, you may want to to delete the `.git` in `my_new_project` folder and reinitialize git it to make it yours.
+        - If you want to change `my_new_project` folder to something else, try to understand the [Folder & File Structure] section. This is because you will need to change the alias command in `~/.bashrc`. I will write the tutorial on this soon!
 ## 3) Modify the Project Settings
 1. Go to your`../my_new_project/config` folder, and open `settings.bash`.
 2. You can change the default value to your need such as `DEV_PROJECT_NAME`, `ROS_DISTRO`, `ROS_DOMAIN_ID`, etc. or you can add your own.
@@ -77,13 +90,15 @@ Known issue:
         - Do not rename or remove the default variable name in `ENVIRONMENT` and `ROS SETTINGS` as it is required by this manager. But, you may change the value.
 3. After modifying, type `wst` to re initialize.
 
-# Advanced Setup Tutorial
-- Will write full detail soon!
+# Advanced Tutorial
+- Will write full detail soon! I'm thinking of writing a wiki.
     - For now, explore the `my_new_project` folder:
-        - You can change the alias or add more alias in `~/.bahsrc`if you have more than 1 workspace in a single project. Remember to match your directory name and follow the format as shown in [Folder Structure] section below. If your project folder name is not `my_new_project` then change it as well.
-        - Inside `pkg` directory of the project, you can change, remove or add the folder name that starts with `_`. This manager will smartly identify the folders inside `pkg` that follow this folder naming format. An example `pkg_list.bash` in the folder can be modified.
+        - You can change the alias or add more alias in `~/.bashrc`if you have more than 1 workspace in a single project. Remember to match your directory name and follow the format as shown in [Folder & File Structure] section. If your project folder name is not `my_new_project` then change it as well.
+        - Inside `pkg` directory of the project, you can change, remove or add the folder name that starts with `_`. This manager will smartly identify the folders inside `pkg` that follow this folder naming format.
+        - Control your favourite package version. In `pkg/_XXX`, there is `pkg_list.bash` file which you can modify. An example on how to set the values is written in there if you follow the 
         - `pkg_list.bash` is where you can add your frequently used packages and dependencies. See the examples inside the file.
         - I will try write more details about what each files in `pkg` and `config` means in `project_template` branch.
+
 
 # Recommendation
 ## 1) Install GitHub CLI
@@ -108,38 +123,38 @@ After initializing the workspace, these are useful aliases you can use. Adding o
 |`r2info`|Show information of current active project and workspace.|
 |`r2alias`|Currently only show list of aliases that begins with `r2`.|
 
-Operation on project repo directory.
+Operation on project project directory.
 |Alias|Description|
 |-|-|
 |`r2b`|Colcon build in the initialized `ws_...` workspace.|
 |`r2bf`|Same as `r2b` but will run `rosdep` update and install first (Install dependencies). Recommended for first time setup so that all dependencies is installed before building the package.|
 |`r2del`|Delete `build`, `install` and optional `log` directory from active `ws_...` workspace directory. Recommended to restart terminal to completely remove traces of sourced packages.|
 |`r2cdw`|Change directory to active workspace directory (`ws_...`).|
-|`r2cdr`|Change directory to active project directory (eg: `project_repo`).|
+|`r2cdr`|Change directory to active project directory (eg: `project_dir`).|
 
 
-# Folder Structure
-Recommended to place this development manager repo within the same directory as project repo as shown below:
+# Folder & File Structure
+You need to place this development manager within the same directory level as project directory as shown below:
 <pre>
 PROJECTS_FOLDER
-├── dev_manager (development manager repo)
+├── dev_manager (development manager directory)
 |   ├── config
 |   ├── scripts
 |   ├── dev_init.bash
 |   └── ...
-├── project_repo_1 (project repo)
+├── project_dir_1 (project directory)
 |   ├── config
 |   ├── pkg
 |   ├── ws_robot
 |   ├── ws_my_stuff
 |   └── ...
-├── project_repo_2 (project repo)
+├── project_dir_2 (project directory)
 |   ├── config
 |   ├── pkg
 |   ├── ws_robot
 |   ├── ws_another_one
 |   └── ...
-└── project_repo_3 (project repo)
+└── project_dir_3 (project directory)
     ├── config
     ├── pkg
     ├── ws_robot
@@ -148,37 +163,37 @@ PROJECTS_FOLDER
 
 To use the dev manager, add alias using below format into `.bashrc`:
 ```
-alias <alias>='source <dev_init_path> <repo dir> <ws dir>'
+alias <alias>='source <dev_init_path> <project dir> <ws dir>'
 ```
-where `<repo dir>` dir is relative to PROJECTS_FOLDER dir and `<ws dir>` dir is relative to working repo dir. Make sure the spaces and placement of `/` character is correct.
+where `<project dir>` directory is relative to PROJECTS_FOLDER directory and `<ws dir>` directory is relative to working project dir. Make sure the spaces and placement of `/` character is correct.
 
 eg:
 ```
-alias wsr1='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo_1 /ws_robot'
-alias wsr1ms='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo_1 /ws_mystuff'
-alias wsproject2='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_repo /ws_robot'
+alias wsr1='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_dir_1 /ws_robot'
+alias wsr1ms='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_dir_1 /ws_mystuff'
+alias wsproject2='source /PROJECTS_FOLDER/dev_manager/dev_init.bash /project_dir /ws_robot'
 ```
 You can test the alias and check the `Project Path`, `Project Package Path` and `Active Workspace` is correct. It should look like this for `wsr1` alias:
 ```
-[INFO] Project Path: /PROJECTS_FOLDER/project_repo_1
-[INFO] Project Package Path: /PROJECTS_FOLDER/project_repo_1/pkg
+[INFO] Project Path: /PROJECTS_FOLDER/project_dir_1
+[INFO] Project Package Path: /PROJECTS_FOLDER/project_dir_1/pkg
 [INFO] Active Workspace: /ws_robot
 ```
-
 ## Project Repo Guideline
-The project repo must follow the same structure as template. Inside the template contains pre-defined variables for development manager to consume.
+The project repo must follow the same structure as template (https://github.com/mnmahir/ROS_2_DEV_MANAGER/tree/project_template). Inside the template contains pre-defined variables for development manager to consume.
 
-Please use the template given if you are creating a new project.
-
-# Future Plan
-1. Add Docker support.
-2. Add Python environment support.
-3. Substitute git repo in pkg with git submodule.
-4. `r2b` selected package.
-5. Better automatic project creation using template. (For now, read tutorial above)
-6. Automatic install and integration of the new Gazebo Sim.
 
 # SUPPORT! :D
  Love this project? Consider buying me a coffee to fuel more late-night coding sessions! Your support helps keep the innovation going. 🙌
 
 <a href="https://www.buymeacoffee.com/mnmahir"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=mnmahir&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+
+If you have an interesting idea that you want me to add into this tool, let me know! Or feel free to contribute!
+
+### Planned features
+1. Add Docker support.
+2. Add Python environment support.
+3. Substitute git repo in pkg with git submodule.
+4. `r2b` selected package.
+5. Better automatic project creation. (For now, read tutorial below)
+6. Automatic install and integration of the new Gazebo Sim.
