@@ -17,7 +17,7 @@ function install_apt_packages() {
         done
 
         if [ "$auto_confirm" = false ]; then
-            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            echo -e "$BASH_ACTION  Do you want to continue? [y/n]"
             read -r response
         else
             response="y"
@@ -56,7 +56,7 @@ function install_python_packages() {
         done
 
         if [ "$auto_confirm" = false ]; then
-            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            echo -e "$BASH_ACTION  Do you want to continue? [y/n]"
             read -r response
         else
             response="y"
@@ -95,7 +95,7 @@ function clone_git_packages() {
         done
 
         if [ "$auto_confirm" = false ]; then
-            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            echo -e "$BASH_ACTION  Do you want to continue? [y/n]"
             read -r response
         else
             response="y"
@@ -139,7 +139,7 @@ function execute_commands() {
         done
 
         if [ "$auto_confirm" = false ]; then
-            echo -e "$BASH_ACTION  Do you want to continue? (y/n)"
+            echo -e "$BASH_ACTION  Do you want to continue? [y/n]"
             read -r response
         else
             response="y"

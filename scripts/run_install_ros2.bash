@@ -3,7 +3,7 @@
 # Date: 2024-05-15
 # Usage: Run this script to install ROS 2
 
-if [[ $WS_DEV_SESSION_CHECK == "" ]] || [[ $WS_DEV_SESSION_CHECK != 1 ]]  
+if [[ -z "$WS_DEV_SESSION_CHECK" ]]
 then
  echo -e "$BASH_ERROR Make sure dev_init.bash is sourced. Refer to README.md for instructions."
  echo -e "$BASH_ACTION PRESS [ENTER] TO EXIT"
@@ -12,8 +12,18 @@ then
 fi
 
 
+echo -e "========================================================"
+echo -e "Welcome to ROS 2 Installer (Debian)"
+echo -e "$BASH_INFO You are about to install ROS 2 \e[36m$ROS_DISTRO\e[0m."
+echo "PRESS [ENTER] TO CONTINUE"
+echo "PRESS [N] TO CHANGE DISTRO"
+read -p "" USE_DISTRO
+if [[ $USE_DISTRO =~ ^([nN][oO]|[nN])$ ]]
+then
+    echo -e "$BASH_ACTION Enter the ROS 2 distro you want to use (e.g.: foxy/galactic/humble/iron/jazzy/...):"
+    read -p "" ROS_DISTRO
+fi
 echo -e "========================= NOTE ========================="
-echo -e "Welcome to ROS Installer (Debian)"
 echo -e "Target ROS distro: \e[36m$ROS_DISTRO\e[0m"
 echo -e "Target OS: \e[36m$OS_DISTRO\e[0m"
 echo -e "========================================================"

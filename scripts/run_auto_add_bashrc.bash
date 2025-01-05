@@ -5,7 +5,7 @@
 # Recommended to run by 'r2pkg' or 'source pkg_manager.bash' or '. pkg_manager.bash' to avoid issues with sourcing files.
 
 # To check if dev_init.bash has been sourced.
-if [[ $WS_DEV_SESSION_CHECK == "" ]] || [[ $WS_DEV_SESSION_CHECK != 1 ]]  
+if [[ -z "$WS_DEV_SESSION_CHECK" ]]
 then
  echo -e "$BASH_ERROR Make sure dev_init.bash is sourced. Refer to README.md for instructions."
  echo -e "$BASH_ACTION PRESS [ENTER] TO EXIT"

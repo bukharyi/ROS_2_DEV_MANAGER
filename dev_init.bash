@@ -16,7 +16,8 @@ source $WS_DEV_MANAGER_DIR/scripts/reset.bash
 
 ###### PROJECT ENVIRONMENT ######
 export WS_PROJECT_REPO="$WS_DIR${1:-/$WS_DEV_MANAGER_DIR_NAME/temp}"
-export WS_PROJECT_WORKSPACE="${2:-/ws_robot}"
+export WS_PROJECT_DIR_NAME="$(basename $WS_PROJECT_REPO)"
+export WS_PROJECT_WORKSPACE="$2"
 
 
 ###### DEVELOPMENT SESSION ######
@@ -24,18 +25,21 @@ if [ "$WS_PROJECT_REPO" == "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
 	source $WS_DEV_MANAGER_DIR/config/settings.bash
 	source $WS_PROJECT_REPO/config/settings.bash
 	source $WS_DEV_MANAGER_DIR/config/aliases.bash
-	alias r2dev="source $WS_DEV_MANAGER_DIR/dev_manager.bash"
+	unalias r2devw
+	unalias r2pkg
+	export WS_DEV_SESSION_CHECK=99
 else
 	source $WS_DEV_MANAGER_DIR/config/settings.bash
 	source $WS_PROJECT_REPO/config/init.bash
 	source $WS_PROJECT_REPO/config/settings.bash    # If contain duplicate, this will overwrite settings from dev_manager.
 	source $WS_DEV_MANAGER_DIR/config/aliases.bash
 	source $WS_PROJECT_REPO/config/aliases.bash     # If contain duplicate, this will overwrite aliases from dev_manager.
-	alias r2dev="source $WS_DEV_MANAGER_DIR/dev_manager.bash"
-	alias r2pkg="source $WS_DEV_MANAGER_DIR/pkg_manager.bash"
+	export WS_DEV_SESSION_CHECK=1
 fi
 
-export WS_DEV_SESSION_CHECK=1
+alias r2dev="source $WS_DEV_MANAGER_DIR/scripts/menu_dev_manager.bash"
+
+
 
 
 ###### DISPLAY ######
@@ -54,16 +58,21 @@ if [ "$WS_PROJECT_REPO" != "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
 	fi
 fi
 echo "==================================================================="
-r2info
-if [ "$WS_PROJECT_REPO" == "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
+if [ $WS_DEV_SESSION_CHECK == 99 ]; then
+	# source $WS_DEV_MANAGER_DIR/scripts/display_info.bash
+	echo -e "$BASH_INFO WELCOME TO ROS 2 DEVELOPMENT MANAGER"
 	echo "==================================================================="
-	echo -e "$BASH_INFO You have initiated a temporary session. Hence, some information above are not available."
-	echo -e "$BASH_INFO Type 'r2dev' and choose '1' to install ROS 2 \e[33m$ROS_DISTRO\e[0m. Change to other ROS distro in temp/config/settings.bash."
-	echo -e "$BASH_INFO Type 'r2dev' and choose '3' to clone a project OR create a new project. Other options may not work properly."
+	echo -e "$BASH_INFO Type '\e[33mr2devp\e[0m' to create a new project."
+	echo -e "$BASH_INFO Type '\e[33mr2devg\e[0m' to clone git project."
+	echo -e "$BASH_INFO Type '\e[33mr2dev\e[0m' for menu."
 	echo -e "$BASH_INFO Refer to README.md for more information."
+	cd $WS_DEV_MANAGER_DIR
 fi
-echo "==================================================================="
-if [ "$WS_PROJECT_REPO" != "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
+
+if [ $WS_DEV_SESSION_CHECK == 1 ]; then
+	r2info
+	echo "==================================================================="
 	r2s
 	r2cdw
+	echo -e "$BASH_INFO Type '\e[33mr2pkg\e[0m' for package manager menu."
 fi
