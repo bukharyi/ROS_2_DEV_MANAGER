@@ -1,8 +1,12 @@
+# This file will be sourced by the dev_manager tool during workspace initialization. You can also run this using `r2s` command.
+# This file contains the list of files that need to be sourced during the initialization of the workspace.
+# You can add any file that you want to be sourced during the initialization of the workspace.
+
 SOURCE_LIST=(
-    # Below are the default source list. Recommended to not change it.
+    # Below are the common source list.
     "/opt/ros/$ROS_DISTRO/setup.bash"
     "/usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash"
-    "$WS_PROJECT_REPO$WS_PROJECT_WORKSPACE/install/local_setup.bash"
+    "$WS_PROJECT_REPO$WS_PROJECT_WORKSPACE/install/local_setup.bash"    # This is the workspace setup file. It is recommended to keep it here.
     # If you have more things to source, you can add it below.
     
 )

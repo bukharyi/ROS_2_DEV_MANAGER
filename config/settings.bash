@@ -1,6 +1,8 @@
 #!/bin/bash
+# This file will be sourced by the dev_manager tool during workspace initialization. You can change the value of the variables below or add more variables.
+
 # ======= ENVIRONMENT =======
-export DEV_PROJECT_NAME="MY_FIRST_PROJECT"      # Short name is preferred. Only alphanumeric characters and underscores are allowed.
+export DEV_PROJECT_NAME="NAME_OF_PROJECT"
 export OS_DISTRO=$(. /etc/os-release && echo $UBUNTU_CODENAME)
 export WS_PROJECT_REPO_DIR_NAME="$(basename $(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"))"
 
