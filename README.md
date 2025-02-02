@@ -16,10 +16,6 @@ Well... Give this tool a try. Most common multi-step processes has been consodil
 - ROS 2 Humble in Ubuntu 22.04 (x86 and ARM)
 - ROS 2 Jazzy in Ubuntu 24.04 (x86 and ARM)
 
-### Known issue
-- In Ubuntu 24.04, you may face "EXTERNALLY-MANAGED" error when using python pip package installer and rosdep. Two solutions:
-    1. Use python environment as suggested. OR
-    2. Remove `/usr/lib/python3.XX/EXTERNALLY-MANAGED` file.
 
 # Tutorial
 - [Create New Project](docs/create_new_project_tutorial.md) - If you are new, start here!

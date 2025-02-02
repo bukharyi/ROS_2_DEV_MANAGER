@@ -22,19 +22,19 @@ export WS_PROJECT_WORKSPACE="$2"
 
 ###### DEVELOPMENT SESSION ######
 if [ "$WS_PROJECT_REPO" == "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
+	export WS_DEV_SESSION_CHECK=99
 	source $WS_DEV_MANAGER_DIR/config/settings.bash
 	source $WS_PROJECT_REPO/config/settings.bash
 	source $WS_DEV_MANAGER_DIR/config/aliases.bash
 	unalias r2devw
 	unalias r2pkg
-	export WS_DEV_SESSION_CHECK=99
 else
-	source $WS_DEV_MANAGER_DIR/config/settings.bash
-	source $WS_PROJECT_REPO/config/init.bash
-	source $WS_PROJECT_REPO/config/settings.bash    # If contain duplicate, this will overwrite settings from dev_manager.
-	source $WS_DEV_MANAGER_DIR/config/aliases.bash
-	source $WS_PROJECT_REPO/config/aliases.bash     # If contain duplicate, this will overwrite aliases from dev_manager.
 	export WS_DEV_SESSION_CHECK=1
+	source $WS_DEV_MANAGER_DIR/config/settings.bash
+	source $WS_DEV_MANAGER_DIR/config/aliases.bash
+	source $WS_PROJECT_REPO/config/settings.bash    # If contain duplicate, this will overwrite settings from dev_manager.
+	source $WS_PROJECT_REPO/config/aliases.bash     # If contain duplicate, this will overwrite aliases from dev_manager.
+	source $WS_PROJECT_REPO/config/init.bash
 fi
 
 alias r2dev="source $WS_DEV_MANAGER_DIR/scripts/menu_dev_manager.bash"
@@ -44,9 +44,8 @@ alias r2dev="source $WS_DEV_MANAGER_DIR/scripts/menu_dev_manager.bash"
 
 ###### DISPLAY ######
 clear -x
-echo -e "\e[33m===================================================================
-            ROS 2 Development Manager (by Mahir Sehmi)
-==================================================================="
+source $WS_DEV_MANAGER_DIR/scripts/display_signature.bash
+echo -e "\e[33m============================= INIT ================================\e[0m"
 echo -e "$BASH_INFO Initializing..."
 if [ "$WS_PROJECT_REPO" != "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
 	if [ "$WS_DEV_MANAGER_REVISION" -lt "$DEV_MANAGER_REVISION" ]; then
@@ -57,11 +56,12 @@ if [ "$WS_PROJECT_REPO" != "$WS_DIR/$WS_DEV_MANAGER_DIR_NAME/temp" ]; then
 		echo -e "$BASH_WARNING The current project is using development manager revision \e[36m$WS_DEV_MANAGER_REVISION\e[0m which is newer than current manager revision \e[36m$DEV_MANAGER_REVISION\e[0m. You may continue using but some features may not work. Please upgrade the manager."
 	fi
 fi
-echo "==================================================================="
+
 if [ $WS_DEV_SESSION_CHECK == 99 ]; then
 	# source $WS_DEV_MANAGER_DIR/scripts/display_info.bash
+	echo -e "\e[33m===================================================================\e[0m"
 	echo -e "$BASH_INFO WELCOME TO ROS 2 DEVELOPMENT MANAGER"
-	echo "==================================================================="
+	echo -e "\e[33m===================================================================\e[0m"
 	echo -e "$BASH_INFO Type '\e[33mr2devp\e[0m' to create a new project."
 	echo -e "$BASH_INFO Type '\e[33mr2devg\e[0m' to clone git project."
 	echo -e "$BASH_INFO Type '\e[33mr2dev\e[0m' for menu."
@@ -70,9 +70,12 @@ if [ $WS_DEV_SESSION_CHECK == 99 ]; then
 fi
 
 if [ $WS_DEV_SESSION_CHECK == 1 ]; then
-	r2info
-	echo "==================================================================="
+	source $WS_DEV_MANAGER_DIR/scripts/run_python_environment_setup.bash
 	r2s
+	echo -e "$BASH_INFO Done!"
+	echo -e "$BASH_INFO Type '\e[35mr2s\e[0m' to source the files again."
+	echo -e "$BASH_INFO Type '\e[35mr2info\e[0m' for workspace info."
+	echo -e "$BASH_INFO Type '\e[35mr2pkg\e[0m' for package manager menu."
 	r2cdw
-	echo -e "$BASH_INFO Type '\e[33mr2pkg\e[0m' for package manager menu."
+	r2info
 fi

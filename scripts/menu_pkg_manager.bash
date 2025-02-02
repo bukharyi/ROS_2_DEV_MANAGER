@@ -18,11 +18,10 @@ PKG_DIR_LIST=($(ls $WS_PROJECT_REPO/pkg | grep -E "^_"))
 
 
 function display_menu_1 {
-    echo -e "================================================="
-    echo -e "              \e[33mPACKAGE MANAGER\e[0m"
-    echo -e "================================================="
+    source $WS_DEV_MANAGER_DIR/scripts/display_signature.bash
+    echo -e "\e[33m====================== \e[0mPACKAGE MANAGER MENU \e[33m=======================\e[0m"
     echo -e "$BASH_ACTION [1/2] Select dir to operate on:"
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "Pkg Dir: \e[36m$WS_PROJECT_REPO/pkg\e[33m/\e[0m"
     echo -e "\e[33m[0]\e[0m All"
     # echo all the directories in PKG_DIR_LIST
@@ -30,9 +29,9 @@ function display_menu_1 {
     do
         echo -e "\e[33m[$(($i+1))]\e[0m ${PKG_DIR_LIST[$i]}"
     done
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "\e[33m[W]\e[0m Active Workspace: \e[36m$WS_PROJECT_REPO\e[33m$WS_PROJECT_WORKSPACE\e[0m"
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "\e[33m[Q]\e[0m TO EXIT"
 }
 
@@ -40,7 +39,7 @@ function display_menu_2 {
     echo -e "================================================="
     echo -e "$BASH_INFO Selected pkg dir to operate: \e[33m[$choice]\e[0m"
     echo -e "$BASH_ACTION [2/2] Select operation:"
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "\e[33m[1]\e[0m All \e[33m[2]\e[0m to \e[33m[6]\e[0m. Refer run_pkg_operation.bash for flow of operations."
     echo -e "\e[33m[2]\e[0m Build only"
     echo -e "\e[33m[3]\e[0m Install apt & Python packages only"
@@ -48,7 +47,7 @@ function display_menu_2 {
     echo -e "\e[33m[5]\e[0m Rosdep update & install only"
     echo -e "\e[33m[6]\e[0m Execute command"
     echo -e "\e[33m[9]\e[0m Delete build, install & log directories"
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "\e[33m[Q]\e[0m TO EXIT"
 }
 

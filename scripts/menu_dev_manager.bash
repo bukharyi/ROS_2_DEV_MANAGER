@@ -5,11 +5,10 @@
 # Recommended to run by 'source dev_manager.bash' or '. dev_manager.bash' to avoid issues with sourcing files.
 
 function display_main_menu {
-    echo -e "================================================="
-    echo -e "              \e[33mDEVELOPMENT MANAGER\e[0m"
-    echo -e "================================================="
+    source $WS_DEV_MANAGER_DIR/scripts/display_signature.bash
+    echo -e "\e[33m==================== \e[0mDEVELOPMENT MANAGER MENU \e[33m=====================\e[0m"
     echo -e "$BASH_ACTION Select an option:"
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     if [ $WS_DEV_SESSION_CHECK -eq 99 ]
     then
         echo -e "\e[33m[1]\e[0m Create new project"
@@ -23,8 +22,9 @@ function display_main_menu {
         echo -e "\e[33m[4]\e[0m Add alias to .bashrc"
         echo -e "\e[33m[5]\e[0m Install ROS2 Desktop"
         echo -e "\e[33m[6]\e[0m Install Recommended Software"
+        echo -e "\e[33m[0]\e[0m Package Manager Menu (\e[35mr2pkg\e[0m)"
     fi
-    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   ="
+    echo -e "=   =   =   =   =   =   =   =   =   =   =   =   =   =   =   =   ="
     echo -e "\e[33m[Q]\e[0m TO EXIT"
 }
 
@@ -81,6 +81,10 @@ function main_menu_to_run {
                 source $WS_DEV_MANAGER_DIR/config/recommended_pkg.bash
                 source $WS_DEV_MANAGER_DIR/scripts/func_pkg_operation.bash
                 install_apt_packages
+                ;;
+            0)
+                # Open package manager menu
+                r2pkg
                 ;;
             *)
                 echo -e "$BASH_ERROR Invalid option. Please select a valid option."

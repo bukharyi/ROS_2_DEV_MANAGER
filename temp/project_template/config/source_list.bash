@@ -17,3 +17,9 @@ for ((i=0; i<${#PKG_DIR_LIST[@]}; i++))
 do
     SOURCE_LIST+=("$WS_PROJECT_REPO/pkg/${PKG_DIR_LIST[$i]}/install/local_setup.bash")
 done
+
+# Source python environment first if WS_PYTHON_ENV_NAME is set
+if [[ ! -z "$WS_PYTHON_ENV_NAME" ]]
+then
+    SOURCE_LIST=("$WS_PROJECT_REPO/pkg/pyenv/$WS_PYTHON_ENV_NAME/bin/activate" "${SOURCE_LIST[@]}")
+fi

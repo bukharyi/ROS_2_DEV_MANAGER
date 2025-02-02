@@ -21,7 +21,7 @@ SOURCE_LIST=()
 
 source $WS_DEV_MANAGER_DIR/scripts/func_source_file.bash
 source $WS_PROJECT_REPO/config/source_list.bash
-echo -e "$BASH_INFO Sourcing files"
+echo -e "$BASH_INFO Sourcing files..."
 
 
 # Loop through all item in SOURCE_LIST and source them.
@@ -33,6 +33,6 @@ done
 
 echo -e "$BASH_INFO Successfully sourced $BASH_SUCCESS_COUNT/$BASH_TOTAL_COUNT file(s)."
 if [[ $BASH_WARNING_COUNT -gt 0 ]]; then
-    echo -e "$BASH_WARNING Unable to source $BASH_WARNING_COUNT file(s). Program depending on this source may fail. Check if they are installed correctly or wrong path provided."
+    echo -e "$BASH_WARNING Unable to source $BASH_WARNING_COUNT file(s). Program depending on this source may fail. Check if they are built and installed properly or if the path is correct."
 fi
 echo -e "$BASH_INFO Done sourcing."

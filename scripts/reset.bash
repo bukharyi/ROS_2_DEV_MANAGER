@@ -8,6 +8,7 @@ unset ROS_DISTRO
 unset RMW_IMPLEMENTATION
 unset ROS_DOMAIN_ID
 unset IPs
+unset DEV_PYTHON_ENV_NAME
 
 unalias_if_set() {
     alias_name=$1
