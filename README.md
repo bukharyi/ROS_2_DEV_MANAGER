@@ -129,7 +129,7 @@ You can test the alias and check the `Project Path`, `Project Package Path` and 
 
 
 
-# SUPPORT! 😃
+# SUPPORT! 
  Love this project? Consider buying me a coffee to fuel more late-night coding sessions! Your support helps keep the innovation going. 🙌
 
 <a href='https://ko-fi.com/H2H818H9M3' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
